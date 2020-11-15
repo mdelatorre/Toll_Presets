@@ -1,0 +1,128 @@
+<presets xmlns="http://josm.openstreetmap.de/tagging-preset-1.0"
+		author="Manuel de la Torre"
+		icon="presets/barrier/toll_station.svg"
+        link="https://josm.openstreetmap.de/wiki/Presets/Toll_Facilities"
+		shortdescription="Toll Facilities"
+		description="Presets for tagging toll-booths and toll-gantries"
+		version="1.[[revision]]_[[date]]">
+
+	<!--
+	TODO:
+	- more translations
+    - more e-toll countries
+	-->
+    
+  <group icon="presets/barrier/toll_station.svg" name="Toll Facilities">
+
+    <chunk id="common_items">
+        <preset_link preset_name="Contact (Common Schema)" />
+        <space/>
+    </chunk>
+
+    <chunk id="opening_hours">
+        <combo key="opening_hours" text="Opening Hours" delimiter="|" values="24/7|08:30-12:30,15:30-20:00|Sa-Su 00:00-24:00|Mo-Su 09:00-21:00|Mo-Sa 08:00-18:00|Mo-Fr 09:00-17:00|Mo-Fr 08:30-20:00; Sa,Su 08:00-15:00; PH off|Mo-Fr 08:30-20:00; Tu-Su 08:00-15:00; Sa 08:00-12:00|Mo-Su 08:00-18:00; Apr 10-15 off; Jun 08:00-14:00; Aug off; Dec 25 off|sunrise-sunset|Su 10:00+|week 01-53/2 Fr 09:00-12:00; week 02-52/2 We 09:00-12:00" values_no_i18n="true" values_sort="false" />
+    </chunk>
+    
+    <chunk id="common_creditcards">
+      <label text="Credit Cards"
+          es.text="Tarjetas de Crédito"/>
+      <checkgroup columns="2">
+        <check key="payment:american_express" text="Amex" default="off" />
+        <check key="payment:discover_card" text="Discover" default="off" />
+        <check key="payment:mastercard" text="MasterCard" default="off" />
+        <check key="payment:Visa" text="Visa" default="off" />
+
+      </checkgroup>
+    </chunk>
+
+    <chunk id="common_debitcards">
+      <label text="Debit Cards"
+          es.text="Tarjetas de Débito"/>
+      <checkgroup columns="2">
+        <check key="payment:maestro" text="Maestro" es.text="Efectivo" default="off" />
+        <check key="payment:visa_electron" text="Visa Electron" default="off" />
+        <check key="payment:visa_debit " text="Visa debit" es.text="Visa débito" default="off" />
+      </checkgroup>
+    </chunk>
+    
+    <chunk id="common_payment">
+      <label text="Payment methods:"
+          es.text="Formas de pago:" />
+      <check key="payment:cash" delete_if_empty="true"
+             text="Cash"
+          es.text="Efectivo" />
+      <reference ref="common_creditcards" />
+      <reference ref="common_debitcards" />
+    </chunk>
+
+    <item type="node,closedway" icon="SVG/toll_booth_16px.svg" name="Toll Booth">
+        <label text="Tag a Toll Booth station" />
+        <key key="barrier" value="toll_booth" />
+        <text key="name" text="Toll booth name" default=""  />
+        <text key="ref" text="Toll booth ID" default=""  />
+        <text key="operator" text="Operator" default=""  />
+        <optional>
+            <text key="lanes" text="Lanes" default=""  />
+            <text key="maxheight" text="Max Height" default=""  />
+        </optional>
+        <link wiki="Tag:barrier=toll_booth" />
+        <reference ref="common_payment" />
+        <reference ref="opening_hours" />
+        <reference ref="common_items" />
+    </item>
+    <item type="node" icon="SVG/toll_gantry.svg" name="Toll Gantry / Toll Bridge">
+        <label text="Tag a Toll Gantry station" />
+        <key key="highway" value="toll_gantry" />
+        <optional>
+            <text key="operator" text="Operator" default=""  />
+            <text key="maxheight" text="Max Height" default=""  />
+        </optional>
+        <space />
+        <label text="Consider tagging the eToll payment method" />
+        <link wiki="Tag:highway=toll_gantry" />
+        <reference ref="common_items" />
+    </item>
+
+    <group name="eToll Payment" icon="presets/money/bank.svg">
+
+      <group name="North America" icon="presets/place/capital.svg">
+        
+        <item type="node" icon="https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg" icon_size="16" name="Mexico">
+          <label text="If all TAGs are accepted check only MultiTAG." />
+          <check key="payment:multitag" icon="SVG/multitag.png" icon_size="25" text="MultiTAG" delete_if_empty="true" />
+          <space /> 
+          <checkgroup columns="2">
+            <check key="payment:iave" text="IAVE Telepasaje" delete_if_empty="true" />
+            <check key="payment:epass" text="E-Pass"  delete_if_empty="true" />
+            <check key="payment:pase" text="PASE Urbano" delete_if_empty="true" />
+            <check key="payment:quickpass" text="Quickpass"  delete_if_empty="true" />
+            <check key="payment:televia" text="TeleVIA"  delete_if_empty="true" />
+            <check key="payment:viapass" text="ViaPass" delete_if_empty="true" />    
+          </checkgroup>  
+          <link wiki="Key:payment" />
+          <reference ref="common_payment" />
+        </item>
+        
+        <item type="node" icon="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" icon_size="16" name="USA">
+          <label text="US e-Toll Systems" /> 
+          <space />
+          <checkgroup columns="2">
+            <check key="payment:e-zpass" text="E-Zpass"  delete_if_empty="true" /> 
+            <check key="payment:good_to_go" text="Good to Go (WA)" delete_if_empty="true" />
+            <check key="payment:pikepass" text="Pikepass (OK)" delete_if_empty="true" /> 
+            <check key="payment:nc_quick_pass" text="QuickPass (NC)" delete_if_empty="true" /> 
+            <check key="payment:k-tag" text="K-Tag (KS)"  delete_if_empty="true" />
+            <check key="payment:i-pass" text="I-Pass (IL)"  delete_if_empty="true" />
+            <check key="payment:peach_pass" text="PeachPass (GA)"  delete_if_empty="true" />
+            <check key="payment:sunpass" text="SunPass (FL)"  delete_if_empty="true" />
+            <check key="payment:fastrak" text="FasTrak (CA)"  delete_if_empty="true" />
+          </checkgroup> 
+          <link wiki="Key:payment" />
+        </item>
+
+      </group>
+
+    </group>
+
+  </group>
+</presets>
